@@ -16,6 +16,7 @@ import java.util.UUID;
 @Table(name = "booking")
 public class Booking {
     @Id
+    @GeneratedValue
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
