@@ -29,7 +29,8 @@ public class User {
     private String password;
 
     @Column
-    private final String role = "USER";
+    @Builder.Default
+    private String role = "USER";
 
     private LocalDateTime createAt;
 
