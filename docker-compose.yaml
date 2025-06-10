@@ -14,5 +14,11 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  memcached:
+    image: memcached:1.6
+    container_name: booking_memcached
+    ports:
+      - "11211:11211"
+
 volumes:
   postgres_data:
