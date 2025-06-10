@@ -27,16 +27,16 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        final String auhHeader = request.getHeader("Authorization");
+        final String authHeader = request.getHeader("Authorization");
         final String token;
         final String email;
 
-        if (auhHeader == null || !auhHeader.startsWith("Bearer ")){
+        if (authHeader == null || !authHeader.startsWith("Bearer ")){
             filterChain.doFilter(request, response);
             return;
         }
 
-        token = auhHeader.substring(7);
+        token = authHeader.substring(7);
         email = jwtUtil.extractEmail(token);
 
         if(email != null && SecurityContextHolder.getContext().getAuthentication() == null ) {
