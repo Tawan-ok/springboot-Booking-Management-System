@@ -1,8 +1,10 @@
 package bookingManagementSystem.example.bookingManagementSystem.controller;
 
 import bookingManagementSystem.example.bookingManagementSystem.model.dto.request.RegisterRequest;
+import bookingManagementSystem.example.bookingManagementSystem.model.dto.response.AuthResponse;
 import bookingManagementSystem.example.bookingManagementSystem.model.entity.User;
 import bookingManagementSystem.example.bookingManagementSystem.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,11 @@ public class UserController {
     ResponseEntity<List<User>> getUsers() {
         List<User> users = userService.getUsers();
         return ResponseEntity.ok(users);
+    }
+
+    @PostMapping("/register")
+    ResponseEntity<AuthResponse> register(@RequestBody @Valid RegisterRequest request) {
+        return ResponseEntity.ok(userService.register(request));
     }
 
 }

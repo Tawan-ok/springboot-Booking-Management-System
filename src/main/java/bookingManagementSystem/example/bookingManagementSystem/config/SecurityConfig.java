@@ -1,5 +1,6 @@
 package bookingManagementSystem.example.bookingManagementSystem.config;
 
+import bookingManagementSystem.example.bookingManagementSystem.constant.AccessRole;
 import bookingManagementSystem.example.bookingManagementSystem.filter.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +31,9 @@ public class SecurityConfig {
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/users/register").permitAll()
+                        .requestMatchers("/api/admin/register").permitAll()
+                        .requestMatchers("/api/users/**").hasAnyRole()
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

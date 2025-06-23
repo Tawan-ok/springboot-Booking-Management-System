@@ -6,28 +6,23 @@ import bookingManagementSystem.example.bookingManagementSystem.model.dto.respons
 import bookingManagementSystem.example.bookingManagementSystem.model.entity.User;
 import bookingManagementSystem.example.bookingManagementSystem.repository.UserRepository;
 import bookingManagementSystem.example.bookingManagementSystem.util.JwtUtil;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class UserService {
+public class AdminService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    public List<User> getUsers(){
-        return userRepository.findAll();
-    }
-
-
-    public AuthResponse register(RegisterRequest request){
-        var user = User.builder()
+    public AuthResponse register(RegisterRequest request) {
+        var admin = User.builder()
                 .id(UUID.randomUUID())
                 .name(request.getName())
                 .email(request.getEmail())
@@ -35,9 +30,12 @@ public class UserService {
                 .createAt(LocalDateTime.now())
                 .build();
 
-        userRepository.save(user);
-        var token = jwtUtil.generateToken(user);
-        return new AuthResponse(token,  String.valueOf(AccessRole.USER), user.getEmail());
+        userRepository.save(admin);
+
+        var token = jwtUtil.generateToken(admin);
+
+        return new AuthResponse(token, String.valueOf(AccessRole.ADMIN), admin.getEmail());
+
     }
 
 }
