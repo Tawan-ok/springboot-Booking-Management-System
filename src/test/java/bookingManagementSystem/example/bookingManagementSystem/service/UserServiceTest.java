@@ -7,7 +7,7 @@ import bookingManagementSystem.example.bookingManagementSystem.model.dto.respons
 import bookingManagementSystem.example.bookingManagementSystem.model.entity.User;
 import bookingManagementSystem.example.bookingManagementSystem.repository.UserRepository;
 import bookingManagementSystem.example.bookingManagementSystem.util.JwtUtil;
-import bookingManagementSystem.example.bookingManagementSystem.service.UserServiceImpl;
+import bookingManagementSystem.example.bookingManagementSystem.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

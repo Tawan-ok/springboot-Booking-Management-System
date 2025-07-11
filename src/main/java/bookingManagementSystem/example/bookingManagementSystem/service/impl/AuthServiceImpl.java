@@ -1,10 +1,11 @@
-package bookingManagementSystem.example.bookingManagementSystem.service;
+package bookingManagementSystem.example.bookingManagementSystem.service.impl;
 
 import bookingManagementSystem.example.bookingManagementSystem.model.dto.request.LoginRequest;
 import bookingManagementSystem.example.bookingManagementSystem.model.dto.request.RegisterRequest;
 import bookingManagementSystem.example.bookingManagementSystem.model.dto.response.AuthResponse;
 import bookingManagementSystem.example.bookingManagementSystem.model.entity.User;
 import bookingManagementSystem.example.bookingManagementSystem.repository.UserRepository;
+import bookingManagementSystem.example.bookingManagementSystem.service.AuthService;
 import bookingManagementSystem.example.bookingManagementSystem.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -1,5 +1,6 @@
-package bookingManagementSystem.example.bookingManagementSystem.controller;
+package bookingManagementSystem.example.bookingManagementSystem.controller.impl;
 
+import bookingManagementSystem.example.bookingManagementSystem.controller.AuthController;
 import bookingManagementSystem.example.bookingManagementSystem.model.dto.request.LoginRequest;
 import bookingManagementSystem.example.bookingManagementSystem.model.dto.request.RegisterRequest;
 import bookingManagementSystem.example.bookingManagementSystem.model.dto.response.AuthResponse;

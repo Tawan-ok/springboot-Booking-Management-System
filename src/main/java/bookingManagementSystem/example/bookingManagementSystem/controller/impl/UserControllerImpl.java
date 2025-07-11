@@ -1,5 +1,6 @@
-package bookingManagementSystem.example.bookingManagementSystem.controller;
+package bookingManagementSystem.example.bookingManagementSystem.controller.impl;
 
+import bookingManagementSystem.example.bookingManagementSystem.controller.UserController;
 import bookingManagementSystem.example.bookingManagementSystem.model.dto.request.RegisterRequest;
 import bookingManagementSystem.example.bookingManagementSystem.model.dto.request.ResetPasswordRequest;
 import bookingManagementSystem.example.bookingManagementSystem.model.dto.response.AuthResponse;
@@ -21,18 +22,18 @@ public class UserControllerImpl implements UserController {
     private final UserService userService;
 
     @GetMapping("/getAll")
-    ResponseEntity<List<User>> getUsers() {
+    public ResponseEntity<List<User>> getUsers() {
         List<User> users = userService.getUsers();
         return ResponseEntity.ok(users);
     }
 
     @PostMapping("/register")
-    ResponseEntity<AuthResponse> register(@RequestBody @Valid RegisterRequest request) {
+   public ResponseEntity<AuthResponse> register(@RequestBody @Valid RegisterRequest request) {
         return ResponseEntity.ok(userService.register(request));
     }
 
     @PutMapping("/resetPassword/{id}")
-    ResponseEntity<ResetPasswordResponse> resetPassword(@PathVariable UUID id, @RequestBody ResetPasswordRequest request){
+  public   ResponseEntity<ResetPasswordResponse> resetPassword(@PathVariable UUID id, @RequestBody ResetPasswordRequest request){
         ResetPasswordResponse user = userService.resetPassword(id, request);
 
         return ResponseEntity.ok(user);
