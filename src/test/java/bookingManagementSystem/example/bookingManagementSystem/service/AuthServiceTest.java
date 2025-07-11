@@ -6,6 +6,7 @@ import bookingManagementSystem.example.bookingManagementSystem.model.dto.respons
 import bookingManagementSystem.example.bookingManagementSystem.model.entity.User;
 import bookingManagementSystem.example.bookingManagementSystem.repository.UserRepository;
 import bookingManagementSystem.example.bookingManagementSystem.util.JwtUtil;
+import bookingManagementSystem.example.bookingManagementSystem.service.AuthServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,7 +37,7 @@ class AuthServiceTest {
     JwtUtil jwtUtil;
 
     @InjectMocks
-    AuthService authService;
+    AuthServiceImpl authService;
 
     RegisterRequest registerRequest;
     LoginRequest loginRequest;
