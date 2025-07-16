@@ -2,6 +2,7 @@ package bookingManagementSystem.example.bookingManagementSystem.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "booking")
 public class Booking {
     @Id
@@ -27,7 +29,7 @@ public class Booking {
 
     private LocalDate bookingDate;
 
-    private String status = "PENDING";
+    private String status;
 
     private LocalDateTime createAt;
 
