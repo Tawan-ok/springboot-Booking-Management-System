@@ -3,8 +3,10 @@ package bookingManagementSystem.example.bookingManagementSystem.service.impl;
 import bookingManagementSystem.example.bookingManagementSystem.constant.AccessRole;
 import bookingManagementSystem.example.bookingManagementSystem.model.dto.request.RegisterRequest;
 import bookingManagementSystem.example.bookingManagementSystem.model.dto.request.ResetPasswordRequest;
+import bookingManagementSystem.example.bookingManagementSystem.model.dto.request.UserUpdateRequest;
 import bookingManagementSystem.example.bookingManagementSystem.model.dto.response.AuthResponse;
 import bookingManagementSystem.example.bookingManagementSystem.model.dto.response.ResetPasswordResponse;
+import bookingManagementSystem.example.bookingManagementSystem.model.dto.response.UserUpdateResponse;
 import bookingManagementSystem.example.bookingManagementSystem.model.entity.User;
 import bookingManagementSystem.example.bookingManagementSystem.repository.UserRepository;
 import bookingManagementSystem.example.bookingManagementSystem.service.UserService;
@@ -67,6 +69,17 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         return new ResetPasswordResponse(user.getName(), user.getEmail(), user.getCreateAt());
+    }
+
+    public UserUpdateResponse updateUser(UUID id, UserUpdateRequest request) {
+
+        User user = userRepository.findById(id).orElseThrow();
+
+        Optional.ofNullable(request.getName()).ifPresent(user::setName);
+        Optional.ofNullable(request.getEmail()).ifPresent(user::setEmail);
+         userRepository.save(user);
+
+         return new UserUpdateResponse(user.getName(), user.getEmail());
     }
 
 

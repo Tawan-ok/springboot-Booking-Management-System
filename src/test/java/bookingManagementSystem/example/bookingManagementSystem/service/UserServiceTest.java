@@ -3,7 +3,9 @@ package bookingManagementSystem.example.bookingManagementSystem.service;
 import bookingManagementSystem.example.bookingManagementSystem.constant.AccessRole;
 import bookingManagementSystem.example.bookingManagementSystem.model.dto.request.LoginRequest;
 import bookingManagementSystem.example.bookingManagementSystem.model.dto.request.RegisterRequest;
+import bookingManagementSystem.example.bookingManagementSystem.model.dto.request.UserUpdateRequest;
 import bookingManagementSystem.example.bookingManagementSystem.model.dto.response.AuthResponse;
+import bookingManagementSystem.example.bookingManagementSystem.model.dto.response.UserUpdateResponse;
 import bookingManagementSystem.example.bookingManagementSystem.model.entity.User;
 import bookingManagementSystem.example.bookingManagementSystem.repository.UserRepository;
 import bookingManagementSystem.example.bookingManagementSystem.util.JwtUtil;
@@ -21,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -107,6 +110,31 @@ class UserServiceTest {
         
         assertEquals(2, response.size());
         assertEquals("test01@hotmail.com", response.getFirst().getEmail());
+    }
+
+    @Test
+    void shouldUpdateUserSuccess() {
+        UUID id = UUID.randomUUID();
+
+        User user = User.builder()
+                .id(id)
+                .name("test")
+                .email("test01@hotmail.com")
+                .build();
+
+        UserUpdateRequest request = UserUpdateRequest.builder()
+                .name("test01")
+                .email("test01@hotmail.com")
+                .build();
+        when(userRepository.findById(id)).thenReturn(Optional.of(user));
+        when(userRepository.save(any())).thenReturn(user);
+
+        UserUpdateResponse response = userService.updateUser(id, request);
+
+        assertEquals(response.getName(), "test01");
+        assertEquals(response.getEmail(), "test01@hotmail.com");
+
+
     }
 
 }
