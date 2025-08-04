@@ -1,0 +1,75 @@
+sequenceDiagram
+    participant User as 👤 User
+    participant FE as 🖥️ Frontend
+    participant GW as 🚪 API Gateway
+    participant Auth as 🔐 Auth Service
+    participant Hotel as 🏨 Hotel Service
+    participant Booking as 📅 Booking Service
+    participant Payment as 💳 Payment Service
+    participant Notification as 📧 Notification Service
+    participant DB as 🗄️ Database
+
+    %% User Registration/Login
+    User->>FE: 1. Access website
+    FE->>GW: 2. Register/Login request
+    GW->>Auth: 3. Authenticate user
+    Auth->>DB: 4. Validate credentials
+    DB-->>Auth: 5. User data
+    Auth-->>GW: 6. JWT token
+    GW-->>FE: 7. Authentication response
+    FE-->>User: 8. Welcome dashboard
+
+    %% Hotel Search
+    User->>FE: 9. Search hotels (location, dates)
+    FE->>GW: 10. Search request
+    GW->>Hotel: 11. Search hotels
+    Hotel->>DB: 12. Query available hotels/rooms
+    DB-->>Hotel: 13. Hotel & room data
+    Hotel-->>GW: 14. Search results
+    GW-->>FE: 15. Hotel list with pricing
+    FE-->>User: 16. Display search results
+
+    %% Booking Process
+    User->>FE: 17. Select hotel & room
+    FE->>GW: 18. Check availability
+    GW->>Hotel: 19. Verify room availability
+    Hotel->>DB: 20. Check room inventory
+    DB-->>Hotel: 21. Availability status
+    Hotel-->>GW: 22. Availability confirmed
+    GW-->>FE: 23. Room available
+    
+    User->>FE: 24. Proceed to booking
+    FE->>GW: 25. Create booking request
+    GW->>Booking: 26. Process booking
+    Booking->>DB: 27. Create booking record
+    DB-->>Booking: 28. Booking created
+    Booking->>Hotel: 29. Update room inventory
+    Hotel->>DB: 30. Reduce available rooms
+    Booking-->>GW: 31. Booking created (PENDING)
+    GW-->>FE: 32. Booking confirmation
+    FE-->>User: 33. Show booking details
+
+    %% Payment Process
+    User->>FE: 34. Proceed to payment
+    FE->>GW: 35. Payment request
+    GW->>Payment: 36. Process payment
+    Payment->>DB: 37. Create payment record
+    Payment-->>Payment: 38. Call external payment gateway
+    Payment->>Booking: 39. Update booking status
+    Booking->>DB: 40. Update to CONFIRMED
+    Payment-->>GW: 41. Payment successful
+    GW-->>FE: 42. Payment confirmation
+    
+    %% Notification
+    Payment->>Notification: 43. Trigger notifications
+    Notification-->>User: 44. Send confirmation email
+    Notification-->>User: 45. Send SMS confirmation
+    
+    FE-->>User: 46. Show booking success page
+
+    %% Error Handling
+    note over User,DB: ❌ Error scenarios:
+    note over User,DB: - Authentication failure
+    note over User,DB: - Room unavailable  
+    note over User,DB: - Payment failed
+    note over User,DB: - System timeout

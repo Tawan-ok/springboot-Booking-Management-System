@@ -1,0 +1,72 @@
+graph LR
+    subgraph "API Gateway Endpoints"
+        ROOT["/api"]
+    end
+
+    subgraph "Authentication APIs"
+        ROOT --> AUTH["/auth"]
+        AUTH --> LOGIN["/login<br/>POST"]
+        AUTH --> REGISTER["/register<br/>POST"] 
+        AUTH --> REFRESH["/refresh<br/>POST"]
+        AUTH --> LOGOUT["/logout<br/>POST"]
+    end
+
+    subgraph "User Management APIs"
+        ROOT --> USERS["/users"]
+        USERS --> USER_PROFILE["/profile<br/>GET, PUT"]
+        USERS --> USER_BOOKINGS["/bookings<br/>GET"]
+        USERS --> USER_RESET["/reset-password<br/>POST"]
+    end
+
+    subgraph "Hotel Management APIs"
+        ROOT --> HOTELS["/hotels"]
+        HOTELS --> HOTEL_SEARCH["/search<br/>GET"]
+        HOTELS --> HOTEL_DETAIL["/{{id}}<br/>GET"]
+        HOTELS --> HOTEL_ROOMS["/{{id}}/rooms<br/>GET"]
+        HOTELS --> HOTEL_AMENITIES["/{{id}}/amenities<br/>GET"]
+        HOTELS --> HOTEL_REVIEWS["/{{id}}/reviews<br/>GET, POST"]
+    end
+
+    subgraph "Booking APIs"
+        ROOT --> BOOKINGS["/bookings"]
+        BOOKINGS --> BOOKING_CREATE["/create<br/>POST"]
+        BOOKINGS --> BOOKING_DETAIL["/{{id}}<br/>GET"]
+        BOOKINGS --> BOOKING_UPDATE["/{{id}}<br/>PUT"]
+        BOOKINGS --> BOOKING_CANCEL["/{{id}}/cancel<br/>POST"]
+        BOOKINGS --> BOOKING_CHECKIN["/{{id}}/checkin<br/>POST"]
+        BOOKINGS --> BOOKING_CHECKOUT["/{{id}}/checkout<br/>POST"]
+    end
+
+    subgraph "Payment APIs"
+        ROOT --> PAYMENTS["/payments"]
+        PAYMENTS --> PAYMENT_PROCESS["/process<br/>POST"]
+        PAYMENTS --> PAYMENT_STATUS["/{{id}}/status<br/>GET"]
+        PAYMENTS --> PAYMENT_REFUND["/{{id}}/refund<br/>POST"]
+        PAYMENTS --> PAYMENT_HISTORY["/history<br/>GET"]
+    end
+
+    subgraph "Admin APIs"
+        ROOT --> ADMIN["/admin"]
+        ADMIN --> ADMIN_HOTELS["/hotels<br/>GET, POST, PUT, DELETE"]
+        ADMIN --> ADMIN_ROOMS["/rooms<br/>GET, POST, PUT, DELETE"]
+        ADMIN --> ADMIN_USERS["/users<br/>GET, PUT, DELETE"]
+        ADMIN --> ADMIN_BOOKINGS["/bookings<br/>GET, PUT"]
+        ADMIN --> ADMIN_ANALYTICS["/analytics<br/>GET"]
+        ADMIN --> ADMIN_LOGS["/logs<br/>GET"]
+    end
+
+    subgraph "Search & Filter APIs"
+        ROOT --> SEARCH["/search"]
+        SEARCH --> SEARCH_HOTELS["/hotels<br/>GET"]
+        SEARCH --> SEARCH_AVAILABILITY["/availability<br/>GET"]
+        SEARCH --> SEARCH_PRICES["/prices<br/>GET"]
+    end
+
+    %% Styling
+    classDef apiEndpoint fill:#e3f2fd
+    classDef getMethod fill:#4caf50,color:#fff
+    classDef postMethod fill:#2196f3,color:#fff  
+    classDef putMethod fill:#ff9800,color:#fff
+    classDef deleteMethod fill:#f44336,color:#fff
+    
+    class ROOT,AUTH,USERS,HOTELS,BOOKINGS,PAYMENTS,ADMIN,SEARCH apiEndpoint

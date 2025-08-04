@@ -1,0 +1,142 @@
+raph TD
+    %% Frontend Layer
+    subgraph "Frontend (Client)"
+        FE[Web App / Mobile App]
+        USER[User Actions]
+    end
+
+    %% API Gateway Layer  
+    subgraph "API Gateway (Future)"
+        GW[API Gateway]
+        AUTH_GW[Authentication]
+        RATE[Rate Limiting]
+        LOG_GW[Request Logging]
+        LB[Load Balancer]
+    end
+
+    %% Spring Boot Service Layer
+    subgraph "Spring Boot Service"
+        subgraph "Controllers"
+            AC[Auth Controller]
+            UC[User Controller] 
+            HC[Hotel Controller]
+            BC[Booking Controller]
+            PC[Payment Controller]
+            ADMIN[Admin Controller]
+        end
+        
+        subgraph "Security Layer"
+            JWT[JWT Filter]
+            SEC[Security Config]
+        end
+        
+        subgraph "Service Layer"
+            AS[Auth Service]
+            US[User Service]
+            HS[Hotel Service]
+            BS[Booking Service]
+            PS[Payment Service]
+            NS[Notification Service]
+            ES[Email Service]
+        end
+        
+        subgraph "Repository Layer"
+            UR[User Repository]
+            HR[Hotel Repository]
+            RR[Room Repository]
+            BR[Booking Repository]
+            PR[Payment Repository]
+            BLR[Booking Log Repository]
+        end
+    end
+
+    %% Database Layer
+    subgraph "Database Layer"
+        PG[(PostgreSQL)]
+        REDIS[(Redis Cache)]
+    end
+
+    %% External Services
+    subgraph "External Services"
+        PAYMENT_GW[Payment Gateway]
+        EMAIL[Email Service]
+        SMS[SMS Service]
+    end
+
+    %% Logging & Monitoring (Future)
+    subgraph "Logging & Monitoring"
+        ES_LOG[(Elasticsearch)]
+        KIBANA[Kibana Dashboard]
+        METRICS[Application Metrics]
+    end
+
+    %% Flow Connections
+    USER --> FE
+    FE --> GW
+    
+    GW --> AUTH_GW
+    GW --> RATE
+    GW --> LOG_GW
+    GW --> LB
+    
+    LB --> JWT
+    JWT --> SEC
+    SEC --> AC
+    SEC --> UC
+    SEC --> HC
+    SEC --> BC
+    SEC --> PC
+    SEC --> ADMIN
+
+    AC --> AS
+    UC --> US
+    HC --> HS
+    BC --> BS
+    PC --> PS
+    
+    AS --> UR
+    US --> UR
+    HS --> HR
+    HS --> RR
+    BS --> BR
+    BS --> BLR
+    PS --> PR
+    
+    AS --> NS
+    BS --> NS
+    NS --> ES
+    
+    UR --> PG
+    HR --> PG
+    RR --> PG
+    BR --> PG
+    PR --> PG
+    BLR --> PG
+    
+    HS --> REDIS
+    BS --> REDIS
+    
+    PS --> PAYMENT_GW
+    ES --> EMAIL
+    NS --> SMS
+    
+    %% Logging flows
+    AC -.-> ES_LOG
+    BC -.-> ES_LOG
+    PC -.-> ES_LOG
+    ES_LOG --> KIBANA
+    
+    %% Styling
+    classDef frontend fill:#e1f5fe
+    classDef gateway fill:#f3e5f5
+    classDef service fill:#e8f5e8
+    classDef database fill:#fff3e0
+    classDef external fill:#fce4ec
+    classDef logging fill:#f1f8e9
+    
+    class FE,USER frontend
+    class GW,AUTH_GW,RATE,LOG_GW,LB gateway
+    class AC,UC,HC,BC,PC,ADMIN,JWT,SEC,AS,US,HS,BS,PS,NS,ES,UR,HR,RR,BR,PR,BLR service
+    class PG,REDIS database
+    class PAYMENT_GW,EMAIL,SMS external
+    class ES_LOG,KIBANA,METRICS logging
